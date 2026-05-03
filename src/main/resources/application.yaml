@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: otp-project
+  datasource:
+    url: jdbc:postgresql://localhost:5432/otp_db
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: false
+
+jwt:
+  secret: xPDJ0Igbwk2Ti5VmkkU6Arfl60CPucQz6JQmpwak2IJ
+  expiration: 3600000
+
+otp:
+  length: 6
+  ttl: 120
+
+telegram:
+  token: YOUR_TOKEN
+  api-url: https://api.telegram.org/bot
+
+smpp:
+  host: localhost
+  port: 2775
+
+logging:
+  level:
+    root: INFO

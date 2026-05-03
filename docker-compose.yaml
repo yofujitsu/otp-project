@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17
+    container_name: otp-postgres
+    environment:
+      POSTGRES_DB: otp_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: otp-app
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/otp_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - "8080:8080"
