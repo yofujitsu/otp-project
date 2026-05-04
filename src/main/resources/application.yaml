@@ -12,9 +12,17 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: false
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 jwt:
-  secret: xPDJ0Igbwk2Ti5VmkkU6Arfl60CPucQz6JQmpwak2IJ
+  secret: ${JWT_SECRET}
   expiration: 3600000
 
 otp:
@@ -22,12 +30,16 @@ otp:
   ttl: 120
 
 telegram:
-  token: YOUR_TOKEN
+  token: ${TG_TOKEN}
   api-url: https://api.telegram.org/bot
 
 smpp:
   host: localhost
   port: 2775
+  system_id: smppclient1
+  password: password
+  system_type: OTP
+  source_addr: OTPService
 
 logging:
   level:

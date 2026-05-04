@@ -1,6 +1,7 @@
 package ru.yofujitsu.otp_project.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.yofujitsu.otp_project.dto.ResponseTokenDto;
@@ -13,6 +14,7 @@ import ru.yofujitsu.otp_project.util.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -28,9 +30,13 @@ public class AuthService {
                 .username(signUpDto.username())
                 .password(passwordEncoder.encode(signUpDto.password()))
                 .role(signUpDto.role())
+                .email(signUpDto.email())
+                .phone(signUpDto.phone())
+                .tgChatId(signUpDto.telegramId())
                 .build();
 
         userRepository.save(user);
+        log.info("Created new user with role: {}", signUpDto.role());
 
         return new ResponseTokenDto(jwtUtil.generateToken(signUpDto.username()));
     }
@@ -42,6 +48,7 @@ public class AuthService {
         if (!passwordEncoder.matches(signInDto.password(), user.getPassword()))
             throw new RuntimeException("Invalid credentials");
 
+        log.info("New sign in request from user: {}", signInDto.username());
         return new ResponseTokenDto(jwtUtil.generateToken(signInDto.username()));
     }
 }
